@@ -5,10 +5,11 @@
     "main": "./src/js/background.js",
     "scripts": {
         "dev": "webpack -w",
+        "webpack": "webpack",
         "clean": "rm -rf node_modules package-lock.json ./dist"
     },
     "dependencies": {
-        "material-components-web": "^14.0.0"
+        "vuetify": "^2.6.6"
     },
     "devDependencies": {
         "@babel/core": "^7.17.10",
@@ -17,12 +18,18 @@
         "babel-loader": "^8.2.5",
         "copy-webpack-plugin": "^10.2.4",
         "css-loader": "^6.7.1",
+        "deepmerge": "^4.2.2",
         "extract-loader": "^5.1.0",
         "file-loader": "^6.2.0",
         "html-webpack-plugin": "^5.5.0",
+        "material-design-icons-iconfont": "^6.7.0",
         "postcss-loader": "^6.2.1",
-        "sass": "^1.51.0",
-        "sass-loader": "^12.6.0",
+        "sass": "~1.32",
+        "sass-loader": "^13.0.0",
+        "vue": "^2.6.11",
+        "vue-loader": "^15.9.6",
+        "vue-template-compiler": "^2.6.12",
+        "vuetify-loader": "^1.7.3",
         "webpack": "^5.72.0",
         "webpack-cli": "^4.9.2",
         "webpack-dev-server": "^4.9.0"

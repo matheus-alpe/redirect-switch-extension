@@ -1,23 +1,34 @@
 const path = require('path');
-const autoprefixer = require('autoprefixer');
+// const webpack = require('webpack');
+// const autoprefixer = require('autoprefixer');
 const CopyPlugin = require('copy-webpack-plugin');
+const { VueLoaderPlugin } = require('vue-loader');
+const { VuetifyLoaderPlugin } = require('vuetify-loader');
 
 module.exports = {
     mode: 'development',
     entry: {
         background: [path.resolve(__dirname, 'src', 'js', 'background.js')],
-        popup: [path.resolve(__dirname, 'src', 'js', 'popup.js')],
         app: [path.resolve(__dirname, 'src', 'app.js')],
     },
     output: {
         clean: true,
         filename: '[name].js',
         path: path.resolve(__dirname, 'dist'),
+        publicPath: path.resolve(__dirname, 'dist'),
     },
     devtool: 'source-map',
     optimization: {
         minimize: true,
         mangleWasmImports: true,
+    },
+    resolve: {
+        alias: {
+            '@components': path.resolve(__dirname, 'src', 'components'),
+            '@pages': path.resolve(__dirname, 'src', 'pages'),
+            '@plugins': path.resolve(__dirname, 'src', 'plugins'),
+            '@utils': path.resolve(__dirname, 'src', 'utils'),
+        },
     },
     module: {
         rules: [
@@ -29,38 +40,30 @@ module.exports = {
                 },
             },
             {
-                test: /\.scss$/,
+                test: /\.css$/,
+                use: {
+                    loader: 'css-loader',
+                },
+            },
+            {
+                test: /\.s(c|a)ss$/,
                 use: [
-                    {
-                        loader: 'file-loader',
-                        options: {
-                            name: 'popup.css',
-                        },
-                    },
-                    { loader: 'extract-loader' },
-                    { loader: 'css-loader' },
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            postcssOptions: {
-                                plugins: [autoprefixer()],
-                            },
-                        },
-                    },
+                    'vue-style-loader',
+                    'css-loader',
                     {
                         loader: 'sass-loader',
                         options: {
-                            // Prefer Dart Sass
                             implementation: require('sass'),
-
-                            // See https://github.com/webpack-contrib/sass-loader/issues/804
-                            webpackImporter: false,
-                            sassOptions: {
-                                includePaths: ['./node_modules'],
-                            },
                         },
                     },
                 ],
+            },
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader',
+                options: {
+                    reactivityTransform: true,
+                },
             },
         ],
     },
@@ -68,7 +71,7 @@ module.exports = {
         new CopyPlugin({
             patterns: [
                 {
-                    from: path.resolve(__dirname, 'src', 'pages', '**/*'),
+                    from: path.resolve(__dirname, 'src', 'pages', '**/*.html'),
                     to: path.resolve(__dirname, 'dist', '[name][ext]'),
                 },
                 {
@@ -81,5 +84,11 @@ module.exports = {
                 },
             ],
         }),
+        new VueLoaderPlugin(),
+        new VuetifyLoaderPlugin(),
+        // new webpack.DefinePlugin({
+        //     __VUE_OPTIONS_API__: false,
+        //     __VUE_PROD_DEVTOOLS__: false,
+        // }),
     ],
 };

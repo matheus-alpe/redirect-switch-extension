@@ -1,16 +1,43 @@
-@use '@material/card';
+@use 'variables';
 
-@include card.core-styles;
+body {
+    background: #ffffff;
 
-.rs-card {
-    width: 445px;
-    padding: 1em;
+    box-shadow: 0px 16px 24px rgba(0, 0, 0, 0.14),
+        0px 6px 30px rgba(0, 0, 0, 0.12), 0px 8px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    position: relative;
 }
 
-.rs-title {
-    font-size: 1em;
-    line-height: 1.5;
+.popup {
+    width: 800px;
+
+    .list-rules {
+        padding: 0;
+    }
 }
 
-@import 'normalize';
-@import 'variables';
+.input-field {
+    max-width: 326px;
+}
+
+.rule-item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 17px;
+
+    .actions {
+        display: flex;
+        align-items: center;
+    }
+}
+
+.rule-form {
+    .form-inputs {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 17px;
+    }
+}
